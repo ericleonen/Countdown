@@ -15,9 +15,13 @@ export default function TimeInput({ setTimeString }: Props) {
     }
 
     const handleAdd = (value: string) => {
-        setTimeString(prevTimeString => (
-            (prevTimeString + value).slice(0, 6)
-        ));
+        setTimeString(prevTimeString => {
+            if (["0", "00"].includes(value) && prevTimeString.length === 0) {
+                return prevTimeString;
+            } else {
+                return (prevTimeString + value).slice(0, 6);
+            }
+        });
     };
 
     const handleDelete = () => {

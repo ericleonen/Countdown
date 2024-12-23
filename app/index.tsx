@@ -1,11 +1,17 @@
 import BeginButton from "@/components/BeginButton";
 import TimeDisplay from "@/components/TimeDisplay";
 import TimeInput from "@/components/TimeInput";
+import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Index() {
 	const [timeString, setTimeString] = useState("");
+
+	const onBegin = () => {
+		router.setParams({ timeString });
+		router.replace("/countdown");
+	};
 
 	return (
 		<View style={styles.container}>
@@ -13,7 +19,7 @@ export default function Index() {
 			<TimeInput setTimeString={setTimeString} />
 			<BeginButton
 				show={timeString.length > 0}
-				onPress={() => { alert("Hello world!") }}
+				onPress={onBegin}
 			/>
 		</View>
   	);
