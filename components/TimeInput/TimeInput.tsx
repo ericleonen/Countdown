@@ -44,7 +44,7 @@ export default function TimeInput({ setTimeString }: Props) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        width: "80%",
+        width: 330,
         flexWrap: "wrap"
     }
 });

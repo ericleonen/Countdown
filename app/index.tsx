@@ -1,3 +1,4 @@
+import BeginButton from "@/components/BeginButton";
 import TimeDisplay from "@/components/TimeDisplay";
 import TimeInput from "@/components/TimeInput";
 import { useState } from "react";
@@ -10,6 +11,10 @@ export default function Index() {
 		<View style={styles.container}>
 	  		<TimeDisplay timeString={timeString} />
 			<TimeInput setTimeString={setTimeString} />
+			<BeginButton
+				show={timeString.length > 0}
+				onPress={() => { alert("Hello world!") }}
+			/>
 		</View>
   	);
 }

@@ -15,7 +15,7 @@ export default function Button({ label, onPress }: Props) {
             >
                 {
                     label === "delete" ? 
-                        <Feather name="delete" size={40} /> :
+                        <Feather name="delete" size={30} /> :
                         <Text style={styles.buttonText}>{label}</Text>
                 }
             </Pressable>
@@ -25,7 +25,7 @@ export default function Button({ label, onPress }: Props) {
 
 const styles = StyleSheet.create({
     container: {
-        width: "33.3%",
+        width: 110,
         padding: 5
     },
     button: {
@@ -38,6 +38,6 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         textAlign: "center",
-        fontSize: 40
+        fontSize: 30
     }
 })
