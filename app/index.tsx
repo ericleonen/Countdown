@@ -1,6 +1,7 @@
 import BeginButton from "@/components/BeginButton";
 import TimeDisplay from "@/components/TimeDisplay";
 import TimeInput from "@/components/TimeInput";
+import { timeStringToSeconds } from "@/utils";
 import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -9,8 +10,10 @@ export default function Index() {
 	const [timeString, setTimeString] = useState("");
 
 	const onBegin = () => {
-		router.setParams({ timeString });
-		router.replace("/countdown");
+		router.replace({
+			pathname: "/countdown",
+			params: { seconds: timeStringToSeconds(timeString) + "" }
+		})
 	};
 
 	return (
