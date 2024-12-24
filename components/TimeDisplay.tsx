@@ -1,3 +1,5 @@
+import colors from "@/constants/styles/colors";
+import text from "@/constants/styles/text";
 import { StyleSheet, Text, View } from "react-native"
 
 type Props = {
@@ -30,7 +32,7 @@ function Digit({ digit, hasColon }: DigitProps) {
     if (digit !== undefined) {
         return <Text style={styles.timeText}>{digit}{hasColon && ":"}</Text>
     } else {
-        return <Text style={[styles.timeText, { color: "lightgray" }]}>0{hasColon && ":"}</Text>
+        return <Text style={[styles.timeText, { color: colors.lightgray }]}>0{hasColon && ":"}</Text>
     }
 }
 
@@ -40,7 +42,8 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     timeText: {
-        fontSize: 70,
-        fontWeight: "bold"
+        fontSize: text.fontSize.xl,
+        fontFamily: text.font.bold,
+        color: colors.blue
     }
 });

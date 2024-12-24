@@ -1,6 +1,7 @@
 import BeginButton from "@/components/BeginButton";
 import TimeDisplay from "@/components/TimeDisplay";
 import TimeInput from "@/components/TimeInput";
+import colors from "@/constants/styles/colors";
 import { timeStringToSeconds } from "@/utils";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: "center",
-		alignItems: "center"
+		alignItems: "center",
+		backgroundColor: colors.darkwhite
 	}
 });

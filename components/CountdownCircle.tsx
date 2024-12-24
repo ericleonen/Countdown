@@ -3,11 +3,12 @@ import Animated, { useAnimatedProps } from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 
 type Props = {
-    percentage: number
+    percentage: number,
+    interpolatedColors: InterpolatedColors
 };
 
-const radius = 120;
-const strokeWidth = 25;
+const radius = 130;
+const strokeWidth = 20;
 
 const trueRadius = radius + strokeWidth;
 const trueDiameter = 2 * trueRadius;
@@ -15,7 +16,7 @@ const circumference = 2 * Math.PI * radius;
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-export default function CountdownCircle({ percentage }: Props) {
+export default function CountdownCircle({ percentage, interpolatedColors }: Props) {
     const animatedProps = useAnimatedProps(() => ({
         strokeDashoffset: circumference * percentage
     }));
@@ -32,15 +33,16 @@ export default function CountdownCircle({ percentage }: Props) {
                     cx={trueRadius}
                     cy={trueRadius}
                     r={radius}
-                    stroke="#e6e6e6"
+                    stroke="black"
                     strokeWidth={strokeWidth}
                     fill="none"
+                    strokeOpacity={0.1}
                 />
                 <AnimatedCircle
                     cx={trueRadius}
                     cy={trueRadius}
                     r={radius}
-                    stroke="red"
+                    stroke={interpolatedColors.default}
                     strokeWidth={strokeWidth}
                     strokeLinecap="round"
                     fill="none"
