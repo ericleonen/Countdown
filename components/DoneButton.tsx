@@ -1,8 +1,7 @@
 import button from "@/constants/styles/button";
 import colors from "@/constants/styles/colors";
 import text from "@/constants/styles/text";
-import { Audio } from "expo-av";
-import { useEffect, useRef } from "react";
+import usePlayAudio from "@/hooks/playAudio";
 import { Pressable, StyleSheet, Text, View } from "react-native"
 
 type Props = {
@@ -10,25 +9,14 @@ type Props = {
     interpolatedColors: InterpolatedColors
 }
 
-const dingAudio = require("@/assets/audio/ding.mp3");
+const dingSource = require("@/assets/audio/ding.mp3");
 
 export default function DoneButton({ onPress, interpolatedColors }: Props) {
-    const dingRef = useRef<Audio.Sound | null>(null);
-
-    useEffect(() => {
-        (async () => {
-            const { sound } = await Audio.Sound.createAsync(dingAudio);
-            dingRef.current = sound;
-        })();
-
-        return () => {
-            if (dingRef.current) dingRef.current.unloadAsync();
-        }
-    }, []);
+    const playDing = usePlayAudio(dingSource);
     
-    const handlePress = async () => {
+    const handlePress = () => {
         onPress();
-        await dingRef.current?.playAsync();
+        playDing();
     }
 
     return (

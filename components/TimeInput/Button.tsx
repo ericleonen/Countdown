@@ -4,7 +4,6 @@ import colors from "@/constants/styles/colors";
 import text from "@/constants/styles/text";
 import button from "@/constants/styles/button";
 
-
 type Props = {
     label: string | "delete",
     onPress?: () => void
