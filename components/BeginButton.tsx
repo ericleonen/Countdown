@@ -2,7 +2,6 @@ import { Pressable, StyleSheet } from "react-native";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import text from "@/constants/styles/text";
 import colors from "@/constants/styles/colors";
-import button from "@/constants/styles/button";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { useEffect } from "react";
 
@@ -31,10 +30,10 @@ export default function BeginButton({ show, onPress }: Props) {
             style={[styles.container, animatedButtonStyle]}
         >
             <Pressable
-                style={({ pressed }) => [styles.button, {
-                    boxShadow: pressed ? button.boxShadow.pressed : button.boxShadow.default(colors.darkblue),
-                    transform: pressed ? button.transform.pressed() : button.transform.default
-                }]}
+                style={({ pressed }) => ({
+                    ...styles.button,
+                    transform: [{ scale: pressed ? 0.9 : 1 }]
+                })}
                 onPress={onPress}
                 disabled={!show}
             >

@@ -1,5 +1,6 @@
 type InterpolatedColors = {
-    light: string,
     default: string,
     dark: string
 }
+
+type CountdownLevel = "calm" | "neutral" | "panic" | "fail";

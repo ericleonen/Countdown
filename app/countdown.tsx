@@ -1,34 +1,48 @@
 import CountdownCircle from "@/components/CountdownCircle";
 import CountdownDisplay from "@/components/CountdownDisplay";
-import { useLocalSearchParams } from "expo-router";
-import { useState, useEffect, useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import { router, useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
+import { StyleSheet } from "react-native";
 import DoneButton from "@/components/DoneButton";
-import useInterpolatedColors from "@/hooks/interpolatedColors";
 import usePlayAudio from "@/hooks/playAudio";
 import useCountdown from "@/hooks/countdown";
+import CountdownResponse from "@/components/CountdownResponse";
+import useAnimatedLevelColor from "@/hooks/animatedLevelColor";
+import Animated from "react-native-reanimated";
 
 const alarmSource = require("@/assets/audio/alarm.wav");
 
 export default function CountdownScreen() {
     const seconds = +(useLocalSearchParams<{ seconds: string }>()).seconds;
 
-    const { percentage, handleDone } = useCountdown(seconds);
+    const { level, percentage, stop, done } = useCountdown(seconds);
     const playAlarm = usePlayAudio(alarmSource, true);
-    const interpolatedColors = useInterpolatedColors(percentage);
+    const animatedBackgroundColor = useAnimatedLevelColor(level, "light");
 
     useEffect(() => {
         if (percentage === 1) playAlarm()
     }, [percentage, playAlarm]);
 
+    const handleDone = () => {
+        stop();
+
+        const timeout = setTimeout(() => {
+            router.replace("/");
+        }, level === "fail" ? 500 : 2000);
+
+        return () => clearTimeout(timeout);
+    }
+
     return (
-        <View style={[styles.container, {
-            backgroundColor: interpolatedColors.light
-        }]}>
-            <CountdownCircle percentage={percentage} interpolatedColors={interpolatedColors} />
-            <CountdownDisplay msLeft={seconds * 1000 * (1 - percentage)} interpolatedColors={interpolatedColors} />
-            <DoneButton onPress={handleDone} interpolatedColors={interpolatedColors} />
-        </View>
+        <Animated.View style={{
+            ...styles.container, 
+            backgroundColor: animatedBackgroundColor
+        }}>
+            <CountdownResponse show={percentage === 1 || done} level={level} />
+            <CountdownCircle percentage={percentage} level={level} />
+            <CountdownDisplay msLeft={seconds * 1000 * (1 - percentage)} level={level} />
+            <DoneButton onPress={handleDone} level={level} />
+        </Animated.View>
     )
 }
 

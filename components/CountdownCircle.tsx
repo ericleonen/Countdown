@@ -1,10 +1,11 @@
+import useAnimatedLevelColor from "@/hooks/animatedLevelColor";
 import { StyleSheet, View } from "react-native";
 import Animated, { useAnimatedProps } from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
 
 type Props = {
     percentage: number,
-    interpolatedColors: InterpolatedColors
+    level: CountdownLevel
 };
 
 const radius = 130;
@@ -16,8 +17,10 @@ const circumference = 2 * Math.PI * radius;
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-export default function CountdownCircle({ percentage, interpolatedColors }: Props) {
-    const animatedProps = useAnimatedProps(() => ({
+export default function CountdownCircle({ percentage, level }: Props) {
+    const animatedColor = useAnimatedLevelColor(level);
+    const animatedCircleProps = useAnimatedProps(() => ({
+        stroke: animatedColor.value,
         strokeDashoffset: circumference * percentage
     }));
 
@@ -42,12 +45,11 @@ export default function CountdownCircle({ percentage, interpolatedColors }: Prop
                     cx={trueRadius}
                     cy={trueRadius}
                     r={radius}
-                    stroke={interpolatedColors.default}
                     strokeWidth={strokeWidth}
                     strokeLinecap="round"
                     fill="none"
                     strokeDasharray={`${circumference} ${circumference}`}
-                    animatedProps={animatedProps}
+                    animatedProps={animatedCircleProps}
                 />
             </Svg>
         </View>
@@ -57,6 +59,7 @@ export default function CountdownCircle({ percentage, interpolatedColors }: Prop
 const styles = StyleSheet.create({
     container: {
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginTop: 15
     }
 });

@@ -1,22 +1,26 @@
 import text from "@/constants/styles/text";
+import useAnimatedLevelColor from "@/hooks/animatedLevelColor";
 import { secondsToTimeDisplayString } from "@/utils";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import Animated from "react-native-reanimated";
 
 type Props = {
     msLeft: number,
-    interpolatedColors: InterpolatedColors
+    level: CountdownLevel
 }
 
-export default function CountdownDisplay({ msLeft, interpolatedColors }: Props) {
+export default function CountdownDisplay({ msLeft, level }: Props) {
     const secondsLeft = Math.ceil(msLeft / 1000);
+    const animatedColor = useAnimatedLevelColor(level);
 
     return (
         <View style={styles.container}>
-            <Text style={[styles.timeDisplay, {
-                color: interpolatedColors.default
-            }]}>
+            <Animated.Text style={{
+                ...styles.timeDisplay, 
+                color: animatedColor
+            }}>
                 {secondsToTimeDisplayString(secondsLeft)}
-            </Text>
+            </Animated.Text>
         </View>
     );
 }

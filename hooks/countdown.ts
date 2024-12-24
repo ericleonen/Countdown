@@ -1,12 +1,25 @@
 import { useEffect, useRef, useState } from "react";
 
 export default function useCountdown(seconds: number): {
+    level: CountdownLevel,
     percentage: number,
-    handleDone: () => void
+    stop: () => void,
+    done: boolean
 } {
     const [origAbsMs, setOrigAbsMs] = useState<number | undefined>(undefined);
     const [msProgress, setMsProgress] = useState(0);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const [level, setLevel] = useState<CountdownLevel>("calm");
+    const [done, setDone] = useState(false);
+
+    const percentage = msProgress / 1000 / seconds;
+
+    useEffect(() => {
+        if (percentage === 1) setLevel("fail");
+        else if (percentage > 0.66) setLevel("panic");
+        else if (percentage > 0.33) setLevel("neutral");
+        else setLevel("calm");
+    }, [percentage, setLevel]);
 
     useEffect(() => {
         if (!origAbsMs) {
@@ -24,7 +37,8 @@ export default function useCountdown(seconds: number): {
         return () => clearInterval(interval);
     }, [origAbsMs, setMsProgress]);
 
-    const handleDone = () => {
+    const stop = () => {
+        setDone(true);
         const interval = intervalRef.current;
 
         if (interval) {
@@ -33,7 +47,9 @@ export default function useCountdown(seconds: number): {
     };
 
     return {
-        percentage: msProgress / 1000 / seconds,
-        handleDone
+        level,
+        percentage,
+        stop,
+        done
     };
 }

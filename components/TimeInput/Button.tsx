@@ -2,7 +2,6 @@ import { StyleSheet, View, Pressable, Text } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import colors from "@/constants/styles/colors";
 import text from "@/constants/styles/text";
-import button from "@/constants/styles/button";
 
 type Props = {
     label: string | "delete",
@@ -13,10 +12,10 @@ export default function Button({ label, onPress }: Props) {
     return (
         <View style={styles.container}>
             <Pressable 
-                style={({ pressed }) => [styles.button, {
-                    boxShadow: pressed ? button.boxShadow.pressed : button.boxShadow.default(colors.lightgray, 4),
-                    transform: pressed ? button.transform.pressed(4) : button.transform.default
-                }]}
+                style={({ pressed }) => ({
+                    ...styles.button,
+                    transform: [{ scale: pressed ? 0.9 : 1 }]
+                })}
                 onPress={onPress}
             >
                 {
@@ -42,7 +41,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderWidth: 3,
-        borderColor: colors.lightgray
+        borderColor: colors.lightgray,
     },
     buttonText: {
         textAlign: "center",
