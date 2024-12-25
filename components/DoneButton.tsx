@@ -2,6 +2,7 @@ import colors from "@/constants/styles/colors";
 import text from "@/constants/styles/text";
 import useAnimatedLevelColor from "@/hooks/animatedLevelColor";
 import usePlayAudio from "@/hooks/playAudio";
+import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import Animated from "react-native-reanimated";
 
@@ -13,10 +14,12 @@ type Props = {
 const dingSource = require("@/assets/audio/ding.mp3");
 
 export default function DoneButton({ onPress, level }: Props) {
+    const [wasPressed, setWasPressed] = useState(false);
     const playDing = usePlayAudio(dingSource);
     const animatedBackgroundColor = useAnimatedLevelColor(level);
     
     const handlePress = () => {
+        setWasPressed(true);
         onPress();
 
         if (level !== "fail") {
@@ -27,6 +30,7 @@ export default function DoneButton({ onPress, level }: Props) {
     return (
         <View style={styles.container}>
             <Pressable
+                disabled={wasPressed}
                 onPress={handlePress}
                 style={({ pressed }) => ({
                     transform: [{ scale: pressed ? 0.9 : 1 }]
