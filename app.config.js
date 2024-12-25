@@ -27,7 +27,7 @@ const getAppName = () => {
 
 export default {
   "expo": {
-    "name": "countdown",
+    "name": getAppName(),
     "slug": "countdown",
     "version": "1.0.0",
     "orientation": "portrait",
