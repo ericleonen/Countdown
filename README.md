@@ -8,4 +8,4 @@ Want to get something done faster? Time yourself with Countdown!
 3. Finish your task and hit "Done". If you run out of time, an annoying alarm sounds 🚨
 
 ## About
-This is my first app made with [Expo](https://expo.dev/). Go to start somewhere!
+This is my first app made with [Expo](https://expo.dev/). Got to start somewhere! 🫤
