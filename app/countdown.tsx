@@ -9,10 +9,13 @@ import useCountdown from "@/hooks/countdown";
 import CountdownResponse from "@/components/CountdownResponse";
 import useAnimatedLevelColor from "@/hooks/animatedLevelColor";
 import Animated from "react-native-reanimated";
+import { useKeepAwake } from "expo-keep-awake";
 
 const alarmSource = require("@/assets/audio/alarm.wav");
 
 export default function CountdownScreen() {
+    useKeepAwake();
+
     const seconds = +(useLocalSearchParams<{ seconds: string }>()).seconds;
 
     const { level, percentage, stop, done } = useCountdown(seconds);
