@@ -16,7 +16,7 @@ export default function useCountdown(seconds: number): {
 
     useEffect(() => {
         if (percentage === 1) setLevel("fail");
-        else if (percentage > 0.66) setLevel("panic");
+        else if (percentage > 0.9) setLevel("panic");
         else if (percentage > 0.33) setLevel("neutral");
         else setLevel("calm");
     }, [percentage, setLevel]);

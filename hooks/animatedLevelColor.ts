@@ -16,8 +16,8 @@ const levelColors = {
         default: colors.red
     },
     "fail": {
-        light: colors.red,
-        default: colors.darkred
+        light: colors.darkred,
+        default: colors.red
     }
 }
 
